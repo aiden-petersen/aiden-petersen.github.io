@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Game of life</title>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style> 
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script src="/Users/aidenpetersen/Downloads/three.js-master/examples/js/controls/OrbitControls.js"></script>
+		<script src="/Users/aidenpetersen/Downloads/three.js-master/examples/js/Detector.js"></script>
+		<script>
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+
+			var camera = new THREE.OrthographicCamera( window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2, 1, 1000 );
+			var controls = new THREE.OrbitControls( camera,renderer.domElement );
+			controls.enableDamping = true;
+			camera.position.set( 0, 0, 500 );
+			camera.lookAt( new THREE.Vector3( 0, 0, 0 ) );
+			
+			
+			
+			var scene = new THREE.Scene();
+			var geometry = new THREE.SphereGeometry( 200, 10, 10 );
+			var material = new THREE.MeshLambertMaterial( { color: 0x80FC66, shading: THREE.FlatShading } );
+			var sphere = new THREE.Mesh( geometry, material );
+			// var geometry = new THREE.BoxGeometry( 200, 200, 200 );
+			// var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+			// var cube = new THREE.Mesh( geometry, material );
+			// scene.add( cube );
+			var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
+			scene.add( directionalLight );
+			var light = new THREE.AmbientLight( 0x404040 ); // soft white light
+			scene.add( light );
+			scene.add( sphere );
+			scene.add( camera );
+			// renderer.render( scene, camera );
+			function animate() {
+
+				requestAnimationFrame( animate );
+
+				// required if controls.enableDamping or controls.autoRotate are set to true
+				controls.update();
+
+				renderer.render( scene, camera );
+
+			};
+			animate();
+		</script>
+	</body>
+</html>
